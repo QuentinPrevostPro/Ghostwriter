@@ -45,8 +45,16 @@ for idx, chunk in enumerate(chunks):
 
     # Add to dataset
     dataset.append({
-        "prompt": f"Original: '{pseudo_prompt}'\nRewrite in Céline style:",
-        "completion": f" {chunk}"  # note the leading space as recommended by OpenAI
+        "messages": [
+            {
+                "role": "user",
+                "content": f"Neutral version of text: {pseudo_prompt} Rewrite in Céline style."
+            },
+            {
+                "role": "assistant",
+                "content": chunk
+            }
+        ]
     })
 
 # Step 3: Save JSONL
