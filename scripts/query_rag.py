@@ -4,6 +4,7 @@ from app.models.rag_model import RAGModel
 vector_db_path = "./app/db/ghostwriter_db"
 embedding_model_name = "BAAI/bge-m3"
 table_name = "celine"
+top_k = 5
 
 
 def main():
@@ -15,7 +16,7 @@ def main():
         if not query:
             continue
 
-        result = rag.query(query, table_name, top_k=5) #Call the RAG workflow
+        result = rag.query(query, table_name, top_k) #Call the RAG workflow
         print("\n--- Response ---")
         print(result)
         print("\n====================\n")
