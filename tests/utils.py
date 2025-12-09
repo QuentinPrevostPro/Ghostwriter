@@ -3,12 +3,12 @@ from mistralai import Mistral
 
 client = Mistral(api_key=os.environ["MISTRAL_API_KEY"])
 
-def judge_rag_score(output, nb_judges):
+def judge_rag_score(output, author, nb_judges):
     scores = []
     for _ in range(nb_judges):
         prompt = (
             "Rate from 1 to 10 how much the following text resembles "
-            "Louis-Ferdinand Céline's literary style. "
+            f"{author}'s literary style. "
             "Only answer with the number.\n\n"
             f"{output}"
         )
@@ -17,7 +17,7 @@ def judge_rag_score(output, nb_judges):
             messages=[
                 {
                     "role": "system",
-                    "content": "You are a LLM-as-a-judge to evaluate how close the generation is to Céline's style. You return an integer score between 1 and 10."
+                    "content": f"You are a LLM-as-a-judge to evaluate how close the generation is to {author}'s style. You return an integer score between 1 and 10."
                 },
                 {
                     "role": "user",

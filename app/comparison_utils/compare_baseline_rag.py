@@ -7,15 +7,14 @@ load_dotenv()
 
 client = Mistral(api_key=os.environ["MISTRAL_API_KEY"])
 
-
-def generate_baseline(query): 
-    prompt = f"Question:\n{query}\nAnswer in Céline style:"
+def generate_baseline(query, author): 
+    prompt = f"Question:\n{query}\nAnswer in {author} style:"
     response = client.chat.complete(
             model="mistral-small-latest",  # or another Mistral model
             messages=[
                 {
                     "role": "system",
-                    "content": "You are a helpful assistant that writes in Céline's style."
+                    "content": f"You are a helpful assistant that writes in {author}'s style."
                 },
                 {
                     "role": "user",
@@ -26,14 +25,14 @@ def generate_baseline(query):
         )
     return response.choices[0].message.content
 
-def generate_rag(vector_db_path, embedding_model_name, query, table_name, top_k): 
+def generate_rag(vector_db_path, embedding_model_name, query, table_name, author, top_k): 
     rag = RAGModel(vector_db_path,embedding_model_name) #Initialize the RAG model
-    return rag.query(query, table_name, top_k) #Call the RAG workflow
+    return rag.query(query, table_name, author, top_k) #Call the RAG workflow
 
-def judge_compare_baseline_rag(baseline_output, rag_output):    
+def judge_compare_baseline_rag(baseline_output, rag_output, author):    
     prompt = (
         "Rate from 1 to 10 how much the two following texts resemble "
-        "Louis-Ferdinand Céline's literary style. "
+        f"{author}'s literary style. "
         "Only answer with the number for each text.\n\n"
         f"Baseline text : {baseline_output}\n\n"
         f"RAG text : {rag_output}"
@@ -43,7 +42,7 @@ def judge_compare_baseline_rag(baseline_output, rag_output):
         messages=[
             {
                 "role": "system",
-                "content": "You are a LLM-as-a-judge to evaluate which of the two input text is the closest to Céline's style. You return an integer score between 1 and 10 for each text."
+                "content": f"You are a LLM-as-a-judge to evaluate which of the two input text is the closest to {author}'s style. You return an integer score between 1 and 10 for each text."
             },
             {
                 "role": "user",
@@ -54,9 +53,9 @@ def judge_compare_baseline_rag(baseline_output, rag_output):
     return response.choices[0].message.content
     
 
-def compare_baseline_rag(query, vector_db_path,embedding_model_name,table_name,top_k):
-    baseline_output = generate_baseline(query)
-    rag_output = generate_rag(vector_db_path, embedding_model_name, query, table_name, top_k)
-    scores = judge_compare_baseline_rag(baseline_output, rag_output)
+def compare_baseline_rag(query, vector_db_path, embedding_model_name, table_name, author, top_k):
+    baseline_output = generate_baseline(query, author)
+    rag_output = generate_rag(vector_db_path, embedding_model_name, query, table_name, author, top_k)
+    scores = judge_compare_baseline_rag(baseline_output, rag_output, author)
     return scores
 
