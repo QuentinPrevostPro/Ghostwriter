@@ -1,13 +1,18 @@
+from shutil import ExecError
 from app.utils.text_processing import load_text, chunk_text
 from app.models.embedding_model import EmbeddingModel
 from app.db.vector_store import VectorStore
 
 #Parameters
-text = "sources/celine - voyage au bout de la nuit.txt"
+text = "sources/moliere - dom juan.txt"
+type = "theater"
+author = "Molière"
+title = "Dom Juan ou le Festin de Pierre"
+date = 1665
 chunk_size = 300
 overlap = 50
 model = "BAAI/bge-m3"
-table_name = "celine"
+table_name = "content"
 
 def main():
     print("Loading source text...")
@@ -30,8 +35,11 @@ def main():
 
     print("Saving to vector database...")
     store = VectorStore("./app/db/ghostwriter_db")
-    records = [{"text": chunk, "embedding": emb} for chunk, emb in zip(chunks, embeddings)]
-    store.create_table(table_name, records)
+    records = [{"text": chunk, "embedding": emb, "type": type, "author": author, "title": title, "date": date} for chunk, emb in zip(chunks, embeddings)]
+    try:
+        store.append_table(table_name, records)
+    except Exception:
+        store.create_table(table_name, records)
 
     print("Done. Vector DB ready.")
 

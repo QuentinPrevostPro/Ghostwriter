@@ -3,7 +3,7 @@ from app.models.rag_model import RAGModel
 #Parameters
 vector_db_path = "./app/db/ghostwriter_db"
 embedding_model_name = "BAAI/bge-m3"
-table_name = "celine"
+table_name = "content"
 top_k = 5
 
 
