@@ -9,7 +9,7 @@ def test_style_quality_minimum_score():
     Ensures the RAG model produces a minimum acceptable Céline-like style.
     """
     rag = RAGModel("./app/db/ghostwriter_db","BAAI/bge-m3")
-    output = rag.query("Il fait beau dehors. Le soleil brille","celine",5)
+    output = rag.query("Il fait beau dehors. Le soleil brille","content",5)
 
     score = judge_rag_score(output,3)
 
@@ -21,7 +21,7 @@ def test_baseline_rag_comparison():
     """
     Ensures the RAG model outperforms the baseline model
     """
-    scores = compare_baseline_rag("Il fait beau dehors. Le soleil brille", "./app/db/ghostwriter_db", "BAAI/bge-m3", "celine", 5)
+    scores = compare_baseline_rag("Il fait beau dehors. Le soleil brille", "./app/db/ghostwriter_db", "BAAI/bge-m3", "content", 5)
     baseline_score, rag_score = map(int, scores.split())
     print(baseline_score)
     print(rag_score)
