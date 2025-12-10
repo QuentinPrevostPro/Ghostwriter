@@ -4,3 +4,5 @@ python-dotenv
 mistralai
 streamlit
 pandas
+fastapi
+uvicorn
