@@ -1,3 +1,9 @@
+import sys
+from pathlib import Path
+
+# Add project root (one level above frontend/) to Python path
+sys.path.append(str(Path(__file__).resolve().parents[1]))
+
 import streamlit as st
 import requests
 from app.db.vector_store import VectorStore    
