@@ -6,3 +6,4 @@ streamlit
 pandas
 fastapi
 uvicorn
+requests
