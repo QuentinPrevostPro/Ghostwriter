@@ -29,7 +29,7 @@ if st.button(f"Write like {author}"):
         # Call the FastAPI endpoint
         try:
             response = requests.post(
-                "http://127.0.0.1:8000/generate",
+                "http://127.0.0.1:8001/generate",
                 json={
                     "query": query,
                     "author": author,
