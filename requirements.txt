@@ -7,4 +7,3 @@ pandas
 fastapi
 uvicorn
 requests
-sys

@@ -1,3 +1,4 @@
+import sqlite3
 import lancedb
 import pandas
 
@@ -22,3 +23,18 @@ class VectorStore:
         authors = table.to_pandas()["author"].dropna().unique().tolist()
         return authors
     
+    def get_biography(self, author):
+        table = self.db.open_table("biography")
+        df = table.to_pandas()
+        row = df[df["author"] == author]
+        if row.empty:
+            return None
+        return row.iloc[0]["biography"]
+
+    def get_structure(self, structure_type):
+        table = self.db.open_table("structure")
+        df = table.to_pandas()
+        row = df[df["type"] == structure_type]
+        if row.empty:
+            return None
+        return row.iloc[0]["description"], row.iloc[0]["rules"]

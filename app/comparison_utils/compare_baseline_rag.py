@@ -25,9 +25,9 @@ def generate_baseline(query, author):
         )
     return response.choices[0].message.content
 
-def generate_rag(vector_db_path, embedding_model_name, query, table_name, author, top_k): 
+def generate_rag(vector_db_path, embedding_model_name, query, author, structure_type, top_k): 
     rag = RAGModel(vector_db_path,embedding_model_name) #Initialize the RAG model
-    return rag.query(query, table_name, author, top_k) #Call the RAG workflow
+    return rag.query(query, author, structure_type, top_k) #Call the RAG workflow
 
 def judge_compare_baseline_rag(baseline_output, rag_output, author):    
     prompt = (
@@ -53,9 +53,9 @@ def judge_compare_baseline_rag(baseline_output, rag_output, author):
     return response.choices[0].message.content
     
 
-def compare_baseline_rag(query, vector_db_path, embedding_model_name, table_name, author, top_k):
+def compare_baseline_rag(query, vector_db_path, embedding_model_name, author, structure_type, top_k):
     baseline_output = generate_baseline(query, author)
-    rag_output = generate_rag(vector_db_path, embedding_model_name, query, table_name, author, top_k)
+    rag_output = generate_rag(vector_db_path, embedding_model_name, query, author, structure_type, top_k)
     scores = judge_compare_baseline_rag(baseline_output, rag_output, author)
     return scores
 

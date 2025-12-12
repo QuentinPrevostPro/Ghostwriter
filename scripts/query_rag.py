@@ -4,11 +4,11 @@ from app.models.rag_model import RAGModel
 #Parameters
 vector_db_path = "./app/db/ghostwriter_db"
 embedding_model_name = "BAAI/bge-m3"
-table_name = "content"
+structure_type = "prose"
 top_k = 5
 
 def pick_author(store):
-    authors = store.list_authors(table_name)
+    authors = store.list_authors("content")
     if not authors:
         raise RuntimeError("No authors found in the table.")
     print("Available authors:")
@@ -31,7 +31,7 @@ def main():
         if not query:
             continue
 
-        result = rag.query(query, table_name, author, top_k) #Call the RAG workflow
+        result = rag.query(query, author, structure_type, top_k) #Call the RAG workflow
         print("\n--- Response ---")
         print(result)
         print("\n====================\n")
