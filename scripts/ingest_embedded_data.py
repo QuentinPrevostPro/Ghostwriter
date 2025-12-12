@@ -3,7 +3,7 @@ from app.utils.text_processing import load_text, chunk_text
 from app.models.embedding_model import EmbeddingModel
 from app.db.vector_store import VectorStore
 
-#Parameters
+#Parameters for the content table
 text = "sources/moliere - dom juan.txt"
 type = "theater"
 author = "Molière"
