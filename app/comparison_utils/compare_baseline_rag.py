@@ -33,7 +33,7 @@ def judge_compare_baseline_rag(baseline_output, rag_output, author):
     prompt = (
         "Rate from 1 to 10 how much the two following texts resemble "
         f"{author}'s literary style. "
-        "Only answer with the number for each text.\n\n"
+        "You must absolutely answer only with the grade for each text. It is forbidden to add labels\n\n"
         f"Baseline text : {baseline_output}\n\n"
         f"RAG text : {rag_output}"
     )
@@ -42,7 +42,7 @@ def judge_compare_baseline_rag(baseline_output, rag_output, author):
         messages=[
             {
                 "role": "system",
-                "content": f"You are a LLM-as-a-judge to evaluate which of the two input text is the closest to {author}'s style. You return an integer score between 1 and 10 for each text."
+                "content": f"You are a LLM-as-a-judge to evaluate which of the two input text is the closest to {author}'s style. You return an integer score between 1 and 10 for each text. Only an integer, labels are forbidden."
             },
             {
                 "role": "user",

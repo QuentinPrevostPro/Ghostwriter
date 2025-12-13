@@ -22,9 +22,8 @@ def test_baseline_rag_comparison():
     Ensures the RAG model outperforms the baseline model
     """
     scores = compare_baseline_rag("Il fait beau dehors. Le soleil brille", "./app/db/ghostwriter_db", "BAAI/bge-m3", "Louis-Ferdinand Céline", "prose", 5)
-    parts = scores.split()
-    baseline_score = int(parts[1])  # Get the second part (first score)
-    rag_score = int(parts[2])       # Get the third part (second score)
+    baseline_score, rag_score = map(int, scores.split())
+
 
     #RAG score must always be higher than baseline score
     assert rag_score >= baseline_score, f"RAG model is less accurate than the baseline model\n\nBaseline score : {baseline_score}\n\nRAG score : {rag_score}\n\n"
