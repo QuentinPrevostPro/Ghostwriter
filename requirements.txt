@@ -1,0 +1,10 @@
+lancedb
+sentence-transformers
+python-dotenv
+mistralai
+streamlit
+pandas
+fastapi
+uvicorn[standard]
+requests
+memory-profiler

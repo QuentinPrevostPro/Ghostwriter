@@ -1,0 +1,2 @@
+# Ghostwriter
+AI-powered ghostwriter
