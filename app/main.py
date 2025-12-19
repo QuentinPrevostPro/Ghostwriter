@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
+from app.db.vector_store import VectorStore
 from app.models.rag_model import RAGModel
 import sys
 
@@ -17,6 +18,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Load DB at startup (no lazy loading)
+print("⏳ Loading DB...")
+store = VectorStore("./app/db/ghostwriter_db")
+print("✅ DB loaded")
+
 # Load RAGModel at startup (no lazy loading)
 print("⏳ Initializing RAGModel...")
 rag = RAGModel("./app/db/ghostwriter_db", "BAAI/bge-m3")
@@ -29,18 +35,32 @@ class GenerateRequest(BaseModel):
     structure_type: str
     top_k: int = 5
 
-# Health check endpoint
 @app.get("/")
 def root():
     return {"status": "ok"}
 
+# Health check endpoint
 @app.get("/health")
 async def health_check():
     if rag:
         return {"status": "RAGModel loaded"}
     return {"status": "RAGModel not loaded"}
 
-# Generate endpoint for Lovable
+from app.db.vector_store import VectorStore
+
+#Author list
+@app.get("/authors")
+async def get_authors():
+    authors = store.list_authors("content")
+    return {"authors": authors}
+
+#Structure type list
+@app.get("/structure-types")
+async def get_structure_types():
+    structure_types = store.list_structure_types("structure")
+    return {"structure_types": structure_types}
+
+# Answer generation
 @app.post("/generate")
 async def generate_response(request: GenerateRequest):
     print("➡️ /generate called")
@@ -53,3 +73,4 @@ async def generate_response(request: GenerateRequest):
     )
     print("✅ Query finished")
     return {"response": result}
+
