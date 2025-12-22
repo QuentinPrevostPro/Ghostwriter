@@ -65,7 +65,6 @@ class RAGModel:
                     "content": prompt
                 }
             ],
-            max_tokens=300
         )
         return response.choices[0].message.content
 

@@ -21,7 +21,6 @@ def generate_baseline(query, author):
                     "content": prompt
                 }
             ],
-            max_tokens=300
         )
     return response.choices[0].message.content
 
