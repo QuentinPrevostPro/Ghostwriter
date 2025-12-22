@@ -4,7 +4,7 @@ import lancedb
 st.title("LanceDB Viewer")
 
 # Use the correct path
-db = lancedb.connect("./app/db/ghostwriter_db")
+db = lancedb.connect("../app/db/ghostwriter_db")
 
 # List available tables
 table_names = db.table_names()
