@@ -10,10 +10,10 @@ from app.db.vector_store import VectorStore
 #table_name = "structure"
 
 #Parameters for the author table
-author = "Molière"
-birth = "1622"
-death = "1673"
-biography = "sources/biography/moliere - biography.txt"
+author = "Jules Barbey d'Aurevilly"
+birth = "1808"
+death = "1889"
+biography = "sources/biography/aurevilly - biography.txt"
 table_name = "biography"
 
 def main():

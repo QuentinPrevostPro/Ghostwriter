@@ -15,7 +15,9 @@ class VectorStore:
  
     def similarity_search(self, query_embedding, table_name, author, top_k):
         table = self.db.open_table(table_name)
-        results = table.search(query_embedding).where(f"author == '{author}'").limit(top_k).to_list()
+        # Escape single quotes by doubling them for SQL
+        escaped_author = author.replace("'", "''")
+        results = table.search(query_embedding).where(f"author == '{escaped_author}'").limit(top_k).to_list()
         return results
     
     def list_authors(self, table_name):

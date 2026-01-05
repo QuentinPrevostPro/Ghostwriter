@@ -4,11 +4,11 @@ from app.models.embedding_model import EmbeddingModel
 from app.db.vector_store import VectorStore
 
 #Parameters for the content table
-text = "sources/moliere - dom juan.txt"
-type = "theater"
-author = "Molière"
-title = "Dom Juan ou le Festin de Pierre"
-date = 1665
+text = "sources/content/aurevilly - diaboliques.txt"
+type = "short story"
+author = "Jules Barbey d'Aurevilly"
+title = "Les Diaboliques"
+date = 1874
 chunk_size = 300
 overlap = 50
 model = "BAAI/bge-m3"
