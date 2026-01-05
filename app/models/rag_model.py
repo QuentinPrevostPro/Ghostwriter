@@ -47,11 +47,13 @@ class RAGModel:
             
             Query: 
             {query}
-
-            Answer in {author} style. The above text section is a source of inspiration for all stylistic effets. 
-            The biography section gives you element about the life of the author that can influence the content of your ouput
-            Writing strucure and rules must be respected
-            """
+            
+            Instructions:
+                - Generate a completely original text; do NOT reuse any names, characters, or specific narrative events from the inspiration text or known works of {author}.
+                - Use the text section only to guide stylistic choices (tone, sentence rhythm, word choice, imagery, etc.).
+                - Use the biography section to influence themes, perspectives, or ideas, not to copy real events or persons.
+                - Respect the writing structure and rules specified.
+                - Output should reflect the style of {author}, including literary tone and stylistic effects, without copying content from existing works."""
                        
         response = self.llm.chat.complete(
             model="mistral-small-latest",  # or another Mistral model
