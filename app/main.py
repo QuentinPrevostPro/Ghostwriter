@@ -1,3 +1,4 @@
+import time
 from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
@@ -64,14 +65,21 @@ async def get_structure_types():
 # Answer generation
 @app.post("/generate")
 async def generate_response(request: GenerateRequest):
+    start_time = time.time()
     print("➡️ /generate called")
+    print(f"📝 Query: {request.query[:50]}...")
+    print(f"👤 Author: {request.author}")
+    print(f"📚 Structure: {request.structure_type}")
+    
     print("🧠 Running query...")
+    query_start = time.time()
     result = rag.query(
         request.query,
         request.author,
         request.structure_type,
         request.top_k,
     )
-    print("✅ Query finished")
+    total_time = time.time() - start_time
+    print(f"✅ Query finished - Total: {total_time:.2f}s")
     return {"response": result}
 
