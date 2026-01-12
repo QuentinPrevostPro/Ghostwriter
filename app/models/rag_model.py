@@ -47,13 +47,11 @@ class RAGModel:
             
             Query: 
             {query}
-            
-            Instructions:
-                - Answer in {author} style. The above text sections are a source of inspiration for all stylistic effets. However, avoid directly reusing any names, characters, or specific narrative events from them
-                - The biography section gives you element about the life of the author that can influence the content of your ouput (themes, perspectives or ideas)
-                - Writing structure and rules must be respected
-                - Write the entire output in the lannguage of the author
-                - Avoid writing too long output. Length of the output must correlated to the complexity and length of the {query} """
+
+            Answer in {author} style. The above text section is a source of inspiration for all stylistic effets. 
+            The biography section gives you element about the life of the author that can influence the content of your ouput (themes, perspectives or ideas)
+            Writing structure and rules must be respected
+            Full output must be written in the language of {author}"""
                        
         response = self.llm.chat.complete(
             model="mistral-small-latest",  # or another Mistral model
