@@ -2,9 +2,8 @@ lancedb
 sentence-transformers
 python-dotenv
 mistralai
-streamlit
 pandas
 fastapi
+gunicorn
 uvicorn[standard]
 requests
-memory-profiler
